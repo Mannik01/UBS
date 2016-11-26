@@ -8,75 +8,55 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="app.com.example.android.ubs.LoginActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:id="@+id/user_email"
-        android:layout_centerVertical="true"
-        />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pswd"
-        android:text="Password"
-        android:layout_below="@id/user_email"
-        android:layout_marginTop="50dp"/>
-
-
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/login"
-        android:text="LOGIN"
-        android:layout_below="@id/pswd"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="45dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/register"
-        android:text="REGISTER"
-        android:layout_below="@id/login"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"/>
-
+    tools:context="app.com.example.android.UBaS.LoginActivity">
 
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_alignBottom="@+id/pswd"
-        android:layout_toRightOf="@id/pswd"
-        android:layout_toEndOf="@id/pswd"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:id="@+id/email" />
-
-    <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:layout_alignBottom="@+id/user_email"
-        android:layout_toRightOf="@id/user_email"
-        android:layout_toEndOf="@id/user_email"
-        android:layout_alignLeft="@id/email"
-        android:layout_alignStart="@id/email"
-        android:id="@+id/password" />
+        android:lines="1"
+        android:id="@+id/email"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:hint="Email"/>
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:lines="1"
+        android:layout_below="@+id/email"
+        android:layout_alignStart="@+id/email"
+        android:layout_marginTop="41dp"
+        android:id="@+id/password"
+        android:hint="Password"/>
 
+    <Button
+        android:text="Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_alignStart="@+id/password"
+        android:layout_marginTop="31dp"
+        android:id="@+id/login" />
+
+    <Button
+        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/login"
+        android:layout_alignEnd="@+id/password"
+        android:id="@+id/register" />
+
+    <TextView
+        android:text="Forgot Password?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:id="@+id/textView" />
 </RelativeLayout>
