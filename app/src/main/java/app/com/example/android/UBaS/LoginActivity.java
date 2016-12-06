@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button mRegistration;
     private EditText mEmail;
     private EditText mPassword;
+    private TextView mPasswordReset;
     private Firebase mRef;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -37,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         mRegistration = (Button) findViewById(R.id.register);
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
+        mPasswordReset = (TextView) findViewById(R.id.reset);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -49,6 +53,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
+
+        mPasswordReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, ChangePassword.class));
+            }
+        });
 
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override

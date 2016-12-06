@@ -32,33 +32,15 @@ public class HomeScreen extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home_screen);
-
-        /**
-         *Setup the DrawerLayout and NavigationView
-         */
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navView) ;
-
-        /**
-         * Lets inflate the very first fragment
-         * Here , we are inflating the TabFragment as the first Fragment
-         */
-
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
-        /**
-         * Setup click events on the Navigation View Items.
-         */
-
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 mDrawerLayout.closeDrawers();
-
-                String flag = "none";
-
                 if (menuItem.getItemId() == R.id.nav_first_fragment) {
 
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
@@ -69,7 +51,9 @@ public class HomeScreen extends AppCompatActivity {
                     Intent clubsIntent = new Intent(HomeScreen.this, MyClubs.class);
                     startActivity(clubsIntent);
                 }
-
+                else if(menuItem.getItemId() == R.id.nav_fourth_fragment) {
+                    startActivity(new Intent(HomeScreen.this, ProfileActivity.class));
+                }
                 else if (menuItem.getItemId() == R.id.nav_sixth_fragment) {
                     FirebaseAuth.getInstance().signOut();
                     Intent redirectLogin = new Intent(HomeScreen.this, LoginActivity.class);
@@ -78,24 +62,13 @@ public class HomeScreen extends AppCompatActivity {
                     finish();
 
                 }
-
-
                 return false;
             }
-
         });
-
-        /**
-         * Setup Drawer Toggle of the Toolbar
-         */
-
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, toolbar,R.string.app_name,
                 R.string.app_name);
-
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-
         mDrawerToggle.syncState();
-
     }
 }

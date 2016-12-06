@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -41,6 +43,9 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_registration);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -86,6 +91,10 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
+        if(password.length() < 6) {
+            Toast.makeText(this, "Please enter more than 5 characters for password", Toast.LENGTH_SHORT).show();
+            return;
+        }
 //        if(TextUtils.isEmpty(userId)) {
 //            if (TextUtils.isEmpty(userId)) {
 //                userId = mFirebaseDatabase.push().getKey();
@@ -103,16 +112,11 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(RegistrationActivity.this, "You are now a member!", Toast.LENGTH_LONG).show();
-
-
                     if (TextUtils.isEmpty(userId)) {
                         userId = mFirebaseDatabase.push().getKey();
                     }
-
                     User user = new User(fullname, email, password, utaId);
                     mFirebaseDatabase.child(userId).setValue(user);
-//                    addMoreInfo();
-
                     Intent homeScreen = new Intent(RegistrationActivity.this, HomeScreen.class);
                     homeScreen.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(homeScreen);
@@ -124,20 +128,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
 
-//    private void addMoreInfo() {
-//
-//        mFirebaseDatabase = mFirebaseInstance.getReference("clubs");
-//        if(TextUtils.isEmpty(userId)) {
-//            userId = mFirebaseDatabase.push().getKey();
-//        }
-//
-//        mFirebaseDatabase.child(userId).setValue("Sorry! You have not joined any clubs!");
-//
-//    }
+
 
 }

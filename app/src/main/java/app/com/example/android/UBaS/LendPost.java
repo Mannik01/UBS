@@ -57,12 +57,10 @@ public class LendPost extends AppCompatActivity implements AdapterView.OnItemSel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lend_post);
-
         mStorage = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("lendItems");
+        DatabaseReference tempRef = FirebaseDatabase.getInstance().getReference();
+        mDatabase = tempRef.child("lendItems");
         mProgress = new ProgressDialog(this);
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -70,23 +68,18 @@ public class LendPost extends AppCompatActivity implements AdapterView.OnItemSel
             actionBar.setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         textView = (AutoCompleteTextView) findViewById(R.id.edit);
         poster = (Button) findViewById(R.id.post);
         descriptionText = (EditText) findViewById(R.id.description);
         termsText = (EditText) findViewById(terms);
         itemImage = (ImageView) findViewById(R.id.userImage);
-
         String[] categories = getResources().getStringArray(R.array.planets_array);
-
         AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.edit);
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this,
                 android.R.layout.simple_dropdown_item_1line, categories);
         textView.setAdapter(adapter);
-
         imagePath = getIntent().getStringExtra("fileUri");
         mImageUri = Uri.parse(getIntent().getStringExtra("URI"));
-
         poster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +88,6 @@ public class LendPost extends AppCompatActivity implements AdapterView.OnItemSel
         });
 
     }
-
     private void postItem() {
 
         final String description = descriptionText.getText().toString();
@@ -112,26 +104,18 @@ public class LendPost extends AppCompatActivity implements AdapterView.OnItemSel
         filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-
                 Uri downloadUri = taskSnapshot.getDownloadUrl();
                 DatabaseReference newPost = mDatabase.push();
                 newPost.child("category").setValue(category);
-                newPost.child("terms").setValue(price);
+                newPost.child("terms").setValue(terms);
                 newPost.child("description").setValue(description);
                 newPost.child("image").setValue(downloadUri.toString());
                 newPost.child("contactEmail").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-
-
                 mProgress.dismiss();
-
-//                Log.d("Inside post", "posting");
-
                 Intent homeScreenIntent = new Intent(LendPost.this, HomeScreen.class);
                 homeScreenIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(homeScreenIntent);
                 finish();
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -147,30 +131,20 @@ public class LendPost extends AppCompatActivity implements AdapterView.OnItemSel
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
 
     }
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
     @Override
     protected void onResume() {
         super.onResume();
-
-
         BitmapFactory.Options options = new BitmapFactory.Options();
-
-//         downsizing image as it throws OutOfMemory Exception for larger
-//         images
         options.inSampleSize = 8;
-
         final Bitmap bitmap = BitmapFactory.decodeFile(imagePath,options);   // GOT THE PIC. USE INTENT TO NEW ACITIVITY
         itemImage.setImageBitmap(imageOreintationValidator(bitmap, imagePath));
-
     }
 
     private Bitmap imageOreintationValidator(Bitmap bitmap, String path) {
-
         ExifInterface ei;
         try {
             ei = new ExifInterface(path);
@@ -193,7 +167,6 @@ public class LendPost extends AppCompatActivity implements AdapterView.OnItemSel
 
         return bitmap;
     }
-
 
     private Bitmap rotateImage(Bitmap source, float angle) {
 

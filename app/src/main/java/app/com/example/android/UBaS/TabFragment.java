@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import buyBorrowExchange.Fragment_Borrow;
 import buyBorrowExchange.Fragment_Buy;
 import buyBorrowExchange.Fragment_Exchange;
@@ -26,28 +29,16 @@ public class TabFragment extends Fragment {
     public TabLayout tabLayout;
     public ViewPager viewPager;
     public int int_items = 3 ;
+    public Fragment buy;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        /**
-         *Inflate tab_layout and setup Views.
-         */
         View rootView =  inflater.inflate(R.layout.tab_layout,null);
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-
-        /**
-         *Set an Apater for the View Pager
-         */
         viewPager.setAdapter(new TabsAdapter(getChildFragmentManager()));
-
-        /**
-         * Now , this is a workaround ,
-         * The setupWithViewPager dose't works without the runnable .
-         * Maybe a Support Library Bug .
-         */
-
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -58,17 +49,11 @@ public class TabFragment extends Fragment {
         return rootView;
 
     }
-
     class TabsAdapter extends FragmentPagerAdapter {
 
         public TabsAdapter(FragmentManager fm) {
             super(fm);
         }
-
-        /**
-         * Return fragment with respect to Position .
-         */
-
         @Override
         public Fragment getItem(int position)
         {
@@ -79,17 +64,11 @@ public class TabFragment extends Fragment {
             }
             return null;
         }
-
         @Override
         public int getCount() {
 
             return int_items;
         }
-
-        /**
-         * This method returns the title of the tab according to the position.
-         */
-
         @Override
         public CharSequence getPageTitle(int position) {
 

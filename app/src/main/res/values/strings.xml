@@ -7,6 +7,7 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="spinner_title">Type Category</string>
     <string name="prevFrag">PARENT_FRAGMENT</string>
+    <string name="clubName">CLUB</string>
 
     <string-array name="planets_array">
         <item>Electronics</item>

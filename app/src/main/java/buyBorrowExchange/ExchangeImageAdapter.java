@@ -7,31 +7,41 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
+import app.com.example.android.UBaS.ExchangeItemInfo;
 import app.com.example.android.UBaS.R;
+import app.com.example.android.UBaS.SellItemInfo;
 
 /**
  * Created by MandipSilwal on 11/16/16.
  */
 
-public class ImageAdapter extends BaseAdapter{
+public class ExchangeImageAdapter extends BaseAdapter{
 
-    private Context c;
-    private int[] imageId;
+    private Context context;
+    private ArrayList<ExchangeItemInfo> dataPaths;
+    private String[] childKeys;
+    private String itemType;
 
-    public ImageAdapter(Context context, int[] ids) {
-        this.c = context;
-        imageId = ids;
+    public ExchangeImageAdapter(Context context, ArrayList<ExchangeItemInfo> dataPaths, String[] childKeys, String type) {
+        this.context = context;
+        this.dataPaths = dataPaths;
+        this.childKeys = childKeys;
+        this.itemType = type;
     }
 
     @Override
     public int getCount() {
-        return imageId.length;
+        return dataPaths.size();
     }
 
     @Override
     public Object getItem(int position) {
 
-        return imageId[position];
+        return dataPaths.get(position);
     }
 
     @Override
@@ -39,12 +49,16 @@ public class ImageAdapter extends BaseAdapter{
         return position;
     }
 
-//     Class created for optimization purpose
+    //     Class created for optimization purpose
     class ViewHolder{
 
         ImageView iView;
         ViewHolder(ImageView img) {
             iView = img;
+        }
+
+        ImageView getImageView() {
+            return iView;
         }
 
     }
@@ -64,8 +78,12 @@ public class ImageAdapter extends BaseAdapter{
         else {
             holder = (ViewHolder) imageView.getTag();
         }
-        holder.iView.setImageResource(imageId[0]); // set images from the database
+//        holder.iView.setImageResource(imagePaths.get(0)); // set images from the database
 
+        Picasso.
+                with(context)
+                .load(dataPaths.get(position).getImage()).resize(400,400).rotate(90).centerInside()
+                .into(holder.getImageView());
         return imageView;
     }
 }

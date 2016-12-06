@@ -32,7 +32,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.categoty.HOME" />
             </intent-filter>
         </activity>
         <activity
@@ -117,7 +117,46 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.com.example.android.UBaS.HomeScreen" />
         </activity>
-        <activity android:name=".MyClubs"></activity>
+        <activity android:name=".MyClubs" />
+        <activity
+            android:name=".ClubDetail"
+            android:parentActivityName=".MyClubs"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.com.example.android.UBaS.HomeScreen" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CreateClub"
+            android:parentActivityName=".MyClubs"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.com.example.android.UBaS.HomeScreen" />
+        </activity>
+        <activity
+            android:name=".ClubPost"
+            android:parentActivityName=".ClubDetail"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.com.example.android.UBaS.HomeScreen" />
+        </activity>
+        <activity
+            android:name=".EmailAct"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.com.example.android.UBaS.HomeScreen" />
+        </activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ChangePassword"></activity>
     </application>
 
 </manifest>

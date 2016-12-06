@@ -51,7 +51,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:id="@+id/navView"
-            android:background="@color/navigationBarColor"
+            android:background="#FF45B3EF"
             app:itemTextColor="#fff"
             app:menu="@menu/drawer_view"
             android:layout_marginTop="0dp"

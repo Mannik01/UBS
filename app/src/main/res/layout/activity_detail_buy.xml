@@ -90,7 +90,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/images"
+                        android:src="@mipmap/ic_launcher"
                         android:scaleType="fitXY"
                          />
 
@@ -100,6 +100,7 @@
                         android:maxLines="1"
                         android:layout_marginLeft="20dp"
                         android:text="Owner Name"
+                        android:id="@+id/ownerName"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 </LinearLayout>
@@ -120,6 +121,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/descriptionTitle"
                         android:text="Item Description"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
@@ -127,6 +129,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:id="@+id/description"
                         android:text="NONE1" />
 
                 </LinearLayout>
@@ -148,6 +151,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/priceTitle"
                         android:text="Price"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
@@ -155,6 +159,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:id="@+id/price"
                         android:text="$20" />
 
                 </LinearLayout>
@@ -176,6 +181,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/categoryTitle"
                         android:text="Category"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
@@ -183,6 +189,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:id="@+id/category"
                         android:text="electronics" />
 
                 </LinearLayout>
@@ -234,9 +241,7 @@
         app:layout_anchorGravity="top"
         android:tint="@android:color/white"
         app:backgroundTint="#85bb65"
-        android:src="@drawable/payicon"
-
-        />
+        android:src="@drawable/payicon" />
 
 
 </android.support.design.widget.CoordinatorLayout>

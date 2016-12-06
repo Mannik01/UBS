@@ -55,11 +55,10 @@ public class SellPost extends AppCompatActivity implements AdapterView.OnItemSel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Log.d("SellPost", "Entered");
         setContentView(R.layout.activity_sell_post);
-
         mStorage = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("sellItems");
+        DatabaseReference tempRef = FirebaseDatabase.getInstance().getReference();
+        mDatabase = tempRef.child("sellItems");
         mProgress = new ProgressDialog(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,29 +68,18 @@ public class SellPost extends AppCompatActivity implements AdapterView.OnItemSel
             actionBar.setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         descriptionText = (EditText) findViewById(R.id.description);
         priceText = (EditText) findViewById(R.id.price);
         textView = (AutoCompleteTextView) findViewById(R.id.edit);
         itemImage = (ImageView) findViewById(R.id.userImage);
         poster = (Button) findViewById(R.id.post);
         String[] categories = getResources().getStringArray(R.array.planets_array);
-
         textView = (AutoCompleteTextView) findViewById(R.id.edit);
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this,
                 android.R.layout.simple_dropdown_item_1line, categories);
         textView.setAdapter(adapter);
-
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                R.array.planets_array, android.R.layout.simple_spinner_item);
-//// Specify the layout to use when the list of choices appears
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//// Apply the adapter to the spinner
-//        itemSelects.setAdapter(adapter);
-
         imagePath = getIntent().getStringExtra("fileUri");
         mImageUri = Uri.parse(getIntent().getStringExtra("URI"));
-
         poster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +141,6 @@ public class SellPost extends AppCompatActivity implements AdapterView.OnItemSel
                 newPost.child("description").setValue(description);
                 newPost.child("image").setValue(downloadUri.toString());
                 newPost.child("contactEmail").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-
 
                 mProgress.dismiss();
 

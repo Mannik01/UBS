@@ -49,192 +49,114 @@ public class TakeItemPic extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_pic);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         resultAcTag = mSharedPreferences.getString(getResources().getString(R.string.prevFrag), null);
-//        resultAcTag = getIntent().getStringExtra("Frag");
-
         Log.d("OnCREATE", resultAcTag);
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-
         choiceGallery = (Button) findViewById(R.id.chooseGallery);
         choiceCamera = (Button) findViewById(R.id.chooseCamera);
-
-
         choiceGallery.setOnClickListener(this);
         choiceCamera.setOnClickListener(this);
-
-
     }
-
-    /**
-     * Here we store the file url as it will be null after returning from camera
-     * app
-     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d("onse", "ON saveinstance called");
         outState.putParcelable("file_uri", tempUri);
         outState.putCharSequence("resultActivity", resultAcTag);
-
-
     }
-
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("restart", "ON RESTART called");
-        Log.d("ONRESTART", resultAcTag);
         String storeTag = resultAcTag;
         resultAcTag = storeTag;
     }
-
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d("onse", "ON RESTOREINSTANCE called");
         tempUri = savedInstanceState.getParcelable("file_uri");
         resultAcTag = savedInstanceState.getString("resultActivity");
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("Biyaaaach", "ON PAUSE called");
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("HHHHHHHHHHWTHHHHHHHHH", "ON RESUME called");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("RNadom sbiutot", "ON STOP called");
-    }
-
     @Override
     public void onClick(View v) {
-
-
         Intent camIntent = null;
         Intent galleryIntent = null;
-
-
         if (v.getId() == R.id.chooseGallery) {
-
             galleryIntent = new Intent();
             galleryIntent.setType("image/*");
             galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), GALLERY_REQUEST);
-
         }
         if (v.getId() == R.id.chooseCamera) {
-
             camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             tempUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-
             camIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
             startActivityForResult(camIntent, CAMERA_REQUEST);
         }
-
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("chiroror", "onActivityResult called");
         if (resultCode == Activity.RESULT_OK){
-
-
             if (requestCode == CAMERA_REQUEST) {
                 try {
-
                     switch (resultAcTag) {
-
                         case "buy":
                             Intent sellPost = new Intent(this, SellPost.class);
                             sellPost.putExtra("fileUri", tempUri.getPath());
                             sellPost.putExtra("URI", tempUri+"");
                             startActivity(sellPost);
                             break;
-
                         case "borrow":
                             Intent lendPost = new Intent(this, LendPost.class);
                             lendPost.putExtra("fileUri", tempUri.getPath());
                             lendPost.putExtra("URI", tempUri+"");
                             startActivity(lendPost);
                             break;
-
                         case "exchange":
                             Intent exchangePost = new Intent(this, ExchangePost.class);
                             exchangePost.putExtra("fileUri", tempUri.getPath());
                             exchangePost.putExtra("URI", tempUri+"");
                             startActivity(exchangePost);
                             break;
-
-
                     }
-
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-
             }
             else if(requestCode == GALLERY_REQUEST) {
-
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
                     String path = getPathFromURI(selectedImageUri);
-
                     try {
-
                         switch (resultAcTag) {
-
                             case "buy":
-                                //   Log.d("chiroror", "adjfljasnldfjnasdnfasd");
                                 Intent sellPost = new Intent(this, SellPost.class);
                                 sellPost.putExtra("fileUri", path);
                                 sellPost.putExtra("URI", selectedImageUri+"");
                                 startActivity(sellPost);
                                 break;
-
-
                             case "borrow":
-                                Log.d("chiroror", "adjfljasnldfjnasdnfasd");
                                 Intent lendPost = new Intent(this, LendPost.class);
                                 lendPost.putExtra("fileUri",path);
                                 lendPost.putExtra("URI", selectedImageUri+"");
                                 startActivity(lendPost);
                                 break;
-
                             case "exchange":
-                                //                        Log.d("chiroror", "adjfljasnldfjnasdnfasd");
                                 Intent exchangePost = new Intent(this, ExchangePost.class);
                                 exchangePost.putExtra("fileUri", path);
                                 exchangePost.putExtra("URI", selectedImageUri+"");
                                 startActivity(exchangePost);
                                 break;
-
-
                         }
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
                 }
-
             }
         }
     }
